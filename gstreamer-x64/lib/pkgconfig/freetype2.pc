@@ -1,0 +1,14 @@
+prefix=/c/gstreamer/1.0/x86_64
+exec_prefix=/c/gstreamer/1.0/x86_64
+libdir=/c/gstreamer/1.0/x86_64/lib
+includedir=/c/gstreamer/1.0/x86_64/include
+
+Name: FreeType 2
+URL: https://freetype.org
+Description: A free, high-quality, and portable font engine.
+Version: 22.0.16
+Requires:
+Requires.private: zlib, bzip2, libpng
+Libs: -L${libdir} -lfreetype
+Libs.private: 
+Cflags: -I${includedir}/freetype2

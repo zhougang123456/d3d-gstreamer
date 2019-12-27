@@ -1,0 +1,14 @@
+prefix=/c/gstreamer/1.0/x86_64
+exec_prefix=${prefix}
+libdir=/c/gstreamer/1.0/x86_64/lib
+includedir=/c/gstreamer/1.0/x86_64/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 58.35.100
+Requires: 
+Requires.private: libswresample >= 3.3.100, libavutil >= 56.22.100
+Conflicts:
+Libs: -L${libdir}  -lavcodec 
+Libs.private: -pthread -lm -Lc:/gstreamer/1.0/x86_64/lib -lz
+Cflags: -I${includedir}

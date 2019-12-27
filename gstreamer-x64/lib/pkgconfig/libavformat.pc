@@ -1,0 +1,14 @@
+prefix=/c/gstreamer/1.0/x86_64
+exec_prefix=${prefix}
+libdir=/c/gstreamer/1.0/x86_64/lib
+includedir=/c/gstreamer/1.0/x86_64/include
+
+Name: libavformat
+Description: FFmpeg container format library
+Version: 58.20.100
+Requires: 
+Requires.private: libavcodec >= 58.35.100, libswresample >= 3.3.100, libavutil >= 56.22.100
+Conflicts:
+Libs: -L${libdir}  -lavformat 
+Libs.private: -lm -lbz2 -Lc:/gstreamer/1.0/x86_64/lib -lz
+Cflags: -I${includedir}

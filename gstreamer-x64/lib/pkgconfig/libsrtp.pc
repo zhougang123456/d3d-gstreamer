@@ -1,0 +1,11 @@
+prefix=/c/gstreamer/1.0/x86_64
+exec_prefix=/c/gstreamer/1.0/x86_64
+libdir=/c/gstreamer/1.0/x86_64/lib
+includedir=${prefix}/include
+
+Name: libsrtp
+Version: 1.6.0
+Description: Library for SRTP (Secure Realtime Transport Protocol)
+
+Libs: -L${libdir} -lsrtp  -lwsock32
+Cflags: -I${includedir}

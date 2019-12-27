@@ -1,0 +1,13 @@
+prefix=/c/gstreamer/1.0/x86_64
+exec_prefix=${prefix}
+libdir=/c/gstreamer/1.0/x86_64/lib
+includedir=${prefix}/include
+modules=1
+
+Name: libXML
+Version: 2.9.7
+Description: libXML library version2.
+Requires:
+Libs: -L${libdir} -lxml2
+Libs.private:   -Lc:/gstreamer/1.0/x86_64/lib -lz    -lws2_32 
+Cflags: -I${includedir}/libxml2 

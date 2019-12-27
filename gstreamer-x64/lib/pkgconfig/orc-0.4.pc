@@ -1,0 +1,16 @@
+prefix=c:/gstreamer/1.0/x86_64
+exec_prefix=c:/gstreamer/1.0/x86_64
+libdir=c:/gstreamer/1.0/x86_64/lib
+includedir=c:/gstreamer/1.0/x86_64/include/orc-0.4
+toolsdir=${exec_prefix}/bin
+
+
+Name: orc-0.4
+Description: Library of Optimized Inner Loops Runtime Compiler
+Version: 0.4.29
+Libs: -L${libdir} -lorc-0.4
+Libs.private:   
+Cflags: -I${includedir}
+
+orcc=${toolsdir}/orcc.exe
+

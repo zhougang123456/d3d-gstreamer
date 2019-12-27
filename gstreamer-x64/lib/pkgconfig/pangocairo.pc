@@ -1,0 +1,12 @@
+prefix=c:/gstreamer/1.0/x86_64
+exec_prefix=c:/gstreamer/1.0/x86_64
+libdir=c:/gstreamer/1.0/x86_64/lib
+includedir=c:/gstreamer/1.0/x86_64/include
+
+Name: Pango Cairo
+Description: Cairo rendering support for Pango
+Version: 1.42.3
+Requires: pango cairo
+Requires.private: pangoft2 pangowin32 
+Libs: -L${libdir} -lpangocairo-1.0 
+Cflags: -I${includedir}/pango-1.0
