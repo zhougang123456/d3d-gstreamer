@@ -44,11 +44,25 @@ static void Dump_H264(guint8* outbuf, gint size)
 }
 #endif
 
+static int fps = 0;
+static guint64 start_time = 0;
+
 static GstFlowReturn new_sample(GstAppSink* gstappsink, gpointer opaque)
 {	
-	printf("new sample");
+	if (fps == 0) {
+		start_time = g_get_monotonic_time() / 1000;
+	}
+	else {
+		if (g_get_monotonic_time() / 1000 - start_time > 1000) {
+			printf("usb video send fps: %d", fps);
+			fps = 0;
+			start_time = g_get_monotonic_time() / 1000;
+
+		}
+	}
 	GstSample* sample = gst_app_sink_pull_sample(gstappsink);
 	if (sample) {
+		fps++;
 		SpiceGstFrame* frame = g_new0(SpiceGstFrame, 1);
 		GstBuffer* gst_buffer = gst_sample_get_buffer(sample);
 		frame->buffer = gst_buffer_ref(gst_buffer);
@@ -92,7 +106,7 @@ GstEncoder::GstEncoder():pipeline(NULL),gstsrc(NULL),appsink(NULL)
 	if (!gst_video_init()) {
 		return;
 	}
-	gchar* desc = g_strdup_printf("dx9screencapsrc name=source ! videoconvert ! openh264enc ! appsink name=sink");
+	gchar* desc = g_strdup_printf("dx9screencapsrc name=source ! videorate ! video/x-raw,framerate=120/1 ! videoconvert ! openh264enc ! appsink name=sink");
 	GError* err = NULL;
 	pipeline = gst_parse_launch_full(desc, NULL, GST_PARSE_FLAG_FATAL_ERRORS, &err);
 	printf("gstreamer pipeline %s", desc);
@@ -111,9 +125,9 @@ GstEncoder::GstEncoder():pipeline(NULL),gstsrc(NULL),appsink(NULL)
 	GstAppSink* appsink = (GstAppSink*)(gst_bin_get_by_name((GstBin*)pipeline, "sink"));
 	GstAppSinkCallbacks appsink_cbs = { NULL, NULL, &new_sample, {NULL} };
 	gst_app_sink_set_callbacks(appsink, &appsink_cbs, NULL, NULL);
-	/*GstBus* bus = gst_pipeline_get_bus(GST_PIPELINE(pipeline));
+	GstBus* bus = gst_pipeline_get_bus((GstPipeline*)(pipeline));
 	gst_bus_set_sync_handler(bus, handle_pipeline_message, NULL, NULL);
-	gst_object_unref(bus);*/
+	gst_object_unref(bus);
 	if (gst_element_set_state(pipeline, GST_STATE_PLAYING) == GST_STATE_CHANGE_FAILURE) {
 		printf("GStreamer pipeline create failure!");
 	}
